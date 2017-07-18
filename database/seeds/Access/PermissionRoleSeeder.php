@@ -25,7 +25,8 @@ class PermissionRoleSeeder extends Seeder
         /*
          * Assign view backend to executive role as example
          */
-        Role::find(2)->permissions()->sync([1]);
+        Role::find(2)->permissions()->sync([1,2,3,4]);
+        Role::find(3)->permissions()->sync([1,2,5]);
 
         $this->enableForeignKeys();
     }

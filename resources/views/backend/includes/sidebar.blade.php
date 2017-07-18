@@ -14,18 +14,6 @@
             </div><!--pull-left-->
         </div><!--user-panel-->
 
-        <!-- search form (Optional) -->
-        {{ Form::open(['route' => 'admin.search.index', 'method' => 'get', 'class' => 'sidebar-form']) }}
-        <div class="input-group">
-            {{ Form::text('q', Request::get('q'), ['class' => 'form-control', 'required' => 'required', 'placeholder' => trans('strings.backend.general.search_placeholder')]) }}
-
-            <span class="input-group-btn">
-                    <button type='submit' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                  </span><!--input-group-btn-->
-        </div><!--input-group-->
-    {{ Form::close() }}
-    <!-- /.search form -->
-
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">{{ trans('menus.backend.sidebar.general') }}</li>
@@ -34,6 +22,15 @@
                 <a href="{{ route('admin.dashboard') }}">
                     <i class="fa fa-dashboard"></i>
                     <span>{{ trans('menus.backend.sidebar.dashboard') }}</span>
+                </a>
+            </li>
+
+            <li class="header">{{ trans('menus.backend.sidebar.management') }}</li>
+
+            <li class="{{ active_class(Active::checkUriPattern('admin/management/costing/project*')) }}">
+                <a href="{{ route('admin.management.costing.project.index') }}">
+                    <i class="fa fa-money"></i>
+                    <span>{{ trans('menus.backend.costing_management.title') }}</span>
                 </a>
             </li>
 

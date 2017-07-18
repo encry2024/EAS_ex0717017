@@ -7,37 +7,42 @@ use Database\DisableForeignKeys;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class HistoryTypeTableSeeder.
- */
+* Class HistoryTypeTableSeeder.
+*/
 class HistoryTypeTableSeeder extends Seeder
 {
-    use DisableForeignKeys, TruncateTable;
+   use DisableForeignKeys, TruncateTable;
 
-    /**
-     * Run the database seed.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->disableForeignKeys();
-        $this->truncateMultiple(['history_types', 'history']);
+   /**
+   * Run the database seed.
+   *
+   * @return void
+   */
+   public function run()
+   {
+      $this->disableForeignKeys();
+      $this->truncateMultiple(['history_types', 'history']);
 
-        $types = [
-            [
-                'name'       => 'User',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name'       => 'Role',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ];
+      $types = [
+         [
+            'name'       => 'User',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+         ],
+         [
+            'name'       => 'Role',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+         ],
+         [
+            'name'       => 'Project',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+         ]
+      ];
 
-        DB::table('history_types')->insert($types);
+      DB::table('history_types')->insert($types);
 
-        $this->enableForeignKeys();
-    }
+      $this->enableForeignKeys();
+   }
 }
