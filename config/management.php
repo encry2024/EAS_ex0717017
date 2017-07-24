@@ -14,9 +14,11 @@ return [
       *
       * Used by Project's Table for setting up database relationship
       */
-      'users_table' => 'users',
+
 
       'costing'  => [
+         'user_table' => 'user',
+
          'project'  => Project::class,
          'projects_table' => 'project',
 

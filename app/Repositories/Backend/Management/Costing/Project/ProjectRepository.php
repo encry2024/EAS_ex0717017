@@ -15,6 +15,7 @@ use App\Events\Backend\Management\Costing\Project\ProjectUploaded;
 use App\Events\Backend\Management\Costing\Project\ProjectPermanentlyDeleted;
 use Excel;
 use App\Models\Management\Costing\Item\Item;
+use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
 * Class ProjectRepository.
@@ -25,6 +26,16 @@ class ProjectRepository extends BaseRepository
    * Associated Repository Model.
    */
    const MODEL = Project::class;
+
+   protected $user;
+
+   /**
+   * @param RoleRepository $user
+   */
+   public function __construct(UserRepository $user)
+   {
+      $this->user = $user;
+   }
 
    /**
    * @param        $permissions
@@ -39,8 +50,10 @@ class ProjectRepository extends BaseRepository
       * be able to differentiate what buttons to show for each row.
       */
       $dataTableQuery = $this->query()
+      ->with('user')
       ->select([
          config('management.costing.projects_table').'.id',
+         config('management.costing.projects_table').'.user_id',
          config('management.costing.projects_table').'.name',
          config('management.costing.projects_table').'.subject',
          config('management.costing.projects_table').'.location',

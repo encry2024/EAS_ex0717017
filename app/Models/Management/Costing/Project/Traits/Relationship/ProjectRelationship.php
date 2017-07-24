@@ -17,4 +17,9 @@ trait ProjectRelationship
       return $this->hasMany(config('management.costing.item'));
    }
 
+   public function user()
+   {
+      return $this->belongsTo(config('auth.providers.users.model'));
+   }
+
 }

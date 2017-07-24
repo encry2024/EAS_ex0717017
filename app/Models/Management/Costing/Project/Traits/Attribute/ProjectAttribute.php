@@ -24,7 +24,7 @@ trait ProjectAttribute
    */
    public function getShowButtonAttribute()
    {
-      return '<a href="'.route('admin.management.costing.project.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.management.costing.crudu.view').'"></i></a> ';
+      return '<a href="'.route('admin.management.costing.project.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.management.costing.crudu.view').'"></i></a> ';
    }
 
    /**
@@ -32,7 +32,7 @@ trait ProjectAttribute
    */
    public function getEditButtonAttribute()
    {
-      return '<a href="'.route('admin.management.costing.project.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.management.costing.crudu.edit').'"></i></a> ';
+      return '<a href="'.route('admin.management.costing.project.edit', $this).'" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.management.costing.crudu.edit').'"></i></a> ';
    }
 
    /**
@@ -88,7 +88,7 @@ trait ProjectAttribute
          data-trans-button-cancel="'.trans('buttons.general.cancel').'"
          data-trans-button-confirm="'.trans('buttons.general.crud.delete').'"
          data-trans-title="'.trans('strings.backend.general.are_you_sure').'"
-         class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.management.costing.crudu.delete').'"></i></a> ';
+         class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.management.costing.crudu.delete').'"></i></a> ';
       }
 
       return '';
@@ -99,7 +99,7 @@ trait ProjectAttribute
    */
    public function getRestoreButtonAttribute()
    {
-      return '<a href="'.route('admin.management.costing.project.restore', $this).'" name="restore_project" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.management.costing.restore_project').'"></i></a> ';
+      return '<a href="'.route('admin.management.costing.project.restore', $this).'" name="restore_project" class="btn btn-xs btn-info"><i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.management.costing.restore_project').'"></i></a> ';
    }
 
    // /**

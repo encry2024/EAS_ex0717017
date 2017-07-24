@@ -5,6 +5,7 @@ namespace App\Models\Management\Costing\Project;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Management\Costing\Project\Traits\Scope\ProjectScope;
 use App\Models\Management\Costing\Project\Traits\Attribute\ProjectAttribute;
+use App\Models\Management\Costing\Project\Traits\Relationship\ProjectRelationship;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
@@ -12,7 +13,8 @@ class Project extends Model
 
    use ProjectScope,
    SoftDeletes,
-   ProjectAttribute;
+   ProjectAttribute,
+   ProjectRelationship;
 
    protected $table;
 

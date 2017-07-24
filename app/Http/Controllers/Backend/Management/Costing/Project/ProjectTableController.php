@@ -35,6 +35,11 @@ class ProjectTableController extends Controller
       return Datatables::of(
          $this->projects->getForDataTable($request->get('status'), $request->get('trashed')))
          ->escapeColumns(['name'])
+         ->addColumn('user', function ($project) {
+            return $project->user->count() ?
+            $project->user->last_name :
+            trans('labels.general.none');
+         })
          ->addColumn('actions', function ($user) {
             return $user->action_buttons;
          })
