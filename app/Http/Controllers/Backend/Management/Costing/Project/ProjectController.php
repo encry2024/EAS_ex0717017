@@ -112,6 +112,6 @@ class ProjectController extends Controller
          )
       ]);
 
-      return redirect()->route('admin.management.costing.project.index')->withFlashSuccess(trans('alerts.backend.management.costing.project.created'));
+      return redirect()->route('admin.management.costing.project.index')->withFlashSuccess(trans('alerts.backend.management.costing.project.created', ['project' => $request->get('name')]));
    }
 }

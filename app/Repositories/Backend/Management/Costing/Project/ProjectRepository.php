@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
-use App\Events\Management\Costing\Project\ProjectCreated;
-use App\Events\Management\Costing\Project\ProjectDeleted;
-use App\Events\Management\Costing\Project\ProjectUpdated;
-use App\Events\Management\Costing\Project\ProjectRestored;
-use App\Events\Management\Costing\Project\ProjectUploaded;
-use App\Events\Management\Costing\Project\ProjectPermanentlyDeleted;
+use App\Events\Backend\Management\Costing\Project\ProjectCreated;
+use App\Events\Backend\Management\Costing\Project\ProjectDeleted;
+use App\Events\Backend\Management\Costing\Project\ProjectUpdated;
+use App\Events\Backend\Management\Costing\Project\ProjectRestored;
+use App\Events\Backend\Management\Costing\Project\ProjectUploaded;
+use App\Events\Backend\Management\Costing\Project\ProjectPermanentlyDeleted;
+use Excel;
+use App\Models\Management\Costing\Item\Item;
 
 /**
 * Class ProjectRepository.
@@ -65,13 +67,13 @@ class ProjectRepository extends BaseRepository
       DB::transaction(function () use ($project, $data) {
          if ($project->save()) {
 
-            $path = $data->file('project_file')->getRealPath();
+            $path = $data['project_file']->getRealPath();
 
-            $data = Excel::load($path, function($reader) {})->get();
+            $projectFile = Excel::load($path, function($reader) {})->get();
 
-               if(!empty($data) && $data->count()){
+               if(!empty($projectFile) && $projectFile->count()){
 
-                  foreach ($data->toArray() as $key => $value) {
+                  foreach ($projectFile->toArray() as $key => $value) {
                      $insert[] = [
                         'project_id' => $project->id,
                         'category' => $value['category'],
@@ -81,111 +83,111 @@ class ProjectRepository extends BaseRepository
                         'item' => $value['item'],
                         'quantity' => $value['quantity'],
                         'unit' => $value['unit'],
-                        'price' => $value['material'],
+                        'material' => $value['material'],
                         'created_at' => date('Y-m-d h:i:s'),
                         'updated_at' => date('Y-m-d h:i:s')
                      ];
                   }
 
 
-                  if(!empty($insert)){
+                  if(!empty($insert)) {
                      Item::insert($insert);
-                     return back()->with('success','Insert Record successfully.');
-                  }
 
+
+                  }
                }
 
+               event(new ProjectUploaded($project));
+
+               return true;
             }
 
-            event(new ProjectUploaded($project));
+            throw new GeneralException(trans('exceptions.backend.management.costing.project.create_error'));
+         });
 
-            return true;
-         }
 
-         throw new GeneralException(trans('exceptions.backend.management.costing.project.create_error'));
-      });
+      }
+
+      // public function update(Model $aircon, array $input)
+      // {
+      //    $data = $input['data'];
+      //
+      //    $aircon->name = $data['name'];
+      //    $aircon->serial_number = $data['serial_number'];
+      //    $aircon->manufacturer = $data['manufacturer'];
+      //    $aircon->price = $data['price'];
+      //    $aircon->horsepower = $data['horsepower'];
+      //    $aircon->voltage = $data['voltage'];
+      //    $aircon->size = $data['size'];
+      //    $aircon->brand_name = $data['brand_name'];
+      //    $aircon->feature = $data['feature'];
+      //    $aircon->manufacturer = $data['manufacturer'];
+      //
+      //    DB::transaction(function () use ($aircon, $data) {
+      //       if ($aircon->save()) {
+      //          event(new AirconUpdated($aircon));
+      //
+      //          return true;
+      //       }
+      //
+      //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.update_error'));
+      //    });
+      // }
+
+      protected function uploadProjectStub($input)
+      {
+         $project = self::MODEL;
+         $project = new $project;
+         $project->name = $input['name'];
+         $project->location = $input['location'];
+         $project->project_date = $input['project_date'];
+         $project->user_id = $input['user_id'];
+         $project->subject = $input['subject'];
+
+
+         return $project;
+      }
+
+      // public function delete(Model $aircon)
+      // {
+      //    if ($aircon->delete()) {
+      //       event(new AirconDeleted($aircon));
+      //
+      //       return true;
+      //    }
+      //
+      //    throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.delete_error'));
+      // }
+      //
+      // public function forceDelete(Model $aircon)
+      // {
+      //    if (is_null($aircon->deleted_at)) {
+      //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.delete_first'));
+      //    }
+      //
+      //    DB::transaction(function () use ($aircon) {
+      //       if ($aircon->forceDelete()) {
+      //          event(new AirconPermanentlyDeleted($aircon));
+      //
+      //          return true;
+      //       }
+      //
+      //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.delete_error'));
+      //    });
+      // }
+      //
+      // public function restore(Model $aircon)
+      // {
+      //    if (is_null($aircon->deleted_at)) {
+      //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.cant_restore'));
+      //    }
+      //
+      //    if ($aircon->restore()) {
+      //       event(new AirconRestored($aircon));
+      //
+      //       return true;
+      //    }
+      //
+      //    throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.restore_error'));
+      // }
    }
-
-   // public function update(Model $aircon, array $input)
-   // {
-   //    $data = $input['data'];
-   //
-   //    $aircon->name = $data['name'];
-   //    $aircon->serial_number = $data['serial_number'];
-   //    $aircon->manufacturer = $data['manufacturer'];
-   //    $aircon->price = $data['price'];
-   //    $aircon->horsepower = $data['horsepower'];
-   //    $aircon->voltage = $data['voltage'];
-   //    $aircon->size = $data['size'];
-   //    $aircon->brand_name = $data['brand_name'];
-   //    $aircon->feature = $data['feature'];
-   //    $aircon->manufacturer = $data['manufacturer'];
-   //
-   //    DB::transaction(function () use ($aircon, $data) {
-   //       if ($aircon->save()) {
-   //          event(new AirconUpdated($aircon));
-   //
-   //          return true;
-   //       }
-   //
-   //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.update_error'));
-   //    });
-   // }
-
-   protected function uploadProjectStub($input)
-   {
-      $project = self::MODEL;
-      $project = new $project;
-      $project->name = $input['name'];
-      $project->location = $input['location'];
-      $project->project_date = $input['project_date'];
-      $project->user_id = $input['user_id'];
-      $project->subject = $input['subject'];
-
-
-      return $project;
-   }
-
-   // public function delete(Model $aircon)
-   // {
-   //    if ($aircon->delete()) {
-   //       event(new AirconDeleted($aircon));
-   //
-   //       return true;
-   //    }
-   //
-   //    throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.delete_error'));
-   // }
-   //
-   // public function forceDelete(Model $aircon)
-   // {
-   //    if (is_null($aircon->deleted_at)) {
-   //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.delete_first'));
-   //    }
-   //
-   //    DB::transaction(function () use ($aircon) {
-   //       if ($aircon->forceDelete()) {
-   //          event(new AirconPermanentlyDeleted($aircon));
-   //
-   //          return true;
-   //       }
-   //
-   //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.delete_error'));
-   //    });
-   // }
-   //
-   // public function restore(Model $aircon)
-   // {
-   //    if (is_null($aircon->deleted_at)) {
-   //       throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.cant_restore'));
-   //    }
-   //
-   //    if ($aircon->restore()) {
-   //       event(new AirconRestored($aircon));
-   //
-   //       return true;
-   //    }
-   //
-   //    throw new GeneralException(trans('exceptions.backend.inventory.items.aircons.restore_error'));
-   // }
-}

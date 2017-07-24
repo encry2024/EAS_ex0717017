@@ -13,7 +13,7 @@ class ManageProjectRequest extends Request
    */
    public function authorize()
    {
-      return access()->hasRoles([1,2]);
+      return access()->hasPermission('view-backend');
    }
 
    /**

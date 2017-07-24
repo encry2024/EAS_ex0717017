@@ -20,7 +20,7 @@ return [
                'create_error' => 'There was a problem uploading this project. Please try again.'
             ]
          ]
-      ]
+      ],
 
 
       'access' => [

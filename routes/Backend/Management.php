@@ -6,7 +6,6 @@
 Route::group([
    'prefix'     => 'management',
    'as'         => 'management.',
-   'middleware' => 'access.routeNeedsPermission:view-backend',
 ], function () {
 
    Route::group([

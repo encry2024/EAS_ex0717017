@@ -14,7 +14,7 @@ return [
    */
 
    'backend' => [
-      'maagement' => [
+      'management' => [
          'costing' => [
             'project' => [
                'created' => 'Project :project was successfully uploaded.',

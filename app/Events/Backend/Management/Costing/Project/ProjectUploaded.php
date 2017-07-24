@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Management\Costing\Project;
+namespace App\Events\Backend\Management\Costing\Project;
 
 use Illuminate\Queue\SerializesModels;
 

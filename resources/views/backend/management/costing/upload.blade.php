@@ -12,6 +12,8 @@
 @section('content')
 {{ Form::open(['route' => 'admin.management.costing.project.import', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
 
+<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
 <div class="box box-success">
    <div class="box-header with-border">
       <h3 class="box-title">{{ trans('labels.backend.management.costing.upload') }}</h3>
@@ -59,7 +61,7 @@
          {{ Form::label('uploaded_by', trans('validation.attributes.backend.management.costing.project.uploaded_by'), ['class' => 'col-lg-2 control-label']) }}
 
          <div class="col-lg-10">
-            {{ Form::text('uploaded_by', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.management.costing.project.uploaded_by')]) }}
+            {{ Form::text('uploaded_by', access()->user()->full_name, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'readOnly' => 'true', 'placeholder' => trans('validation.attributes.backend.management.costing.project.uploaded_by')]) }}
          </div><!--col-lg-10-->
       </div><!--form control-->
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Listeners\Backend\Management\Costing;
+namespace App\Listeners\Backend\Management\Costing\Project;
 
 /**
-* Class UserEventListener.
+* Class ProjectEventListener.
 */
 class ProjectEventListener
 {
@@ -106,8 +106,8 @@ class ProjectEventListener
    {
       history()->withType($this->history_slug)
       ->withEntity($event->project->id)
-      ->withText('trans("history.backend.projects.restored") <strong>{project}</strong>')
-      ->withIcon('refresh')
+      ->withText('trans("history.backend.management.costing.project.uploaded") <strong>{project}</strong>')
+      ->withIcon('upload')
       ->withClass('bg-aqua')
       ->withAssets([
          'project_link' => ['admin.management.costing.project.show', $event->project->name, $event->project->id],

@@ -201,7 +201,7 @@ return [
       App\Providers\MacroServiceProvider::class,
       App\Providers\RouteServiceProvider::class,
 
-      'Maatwebsite\Excel\ExcelServiceProvider',
+      Maatwebsite\Excel\ExcelServiceProvider::class,
    ],
 
    /*
@@ -262,7 +262,7 @@ return [
       'Html'        => Collective\Html\HtmlFacade::class,
       'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
 
-      'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+      'Excel' => Maatwebsite\Excel\Facades\Excel::class,
    ],
 
 ];

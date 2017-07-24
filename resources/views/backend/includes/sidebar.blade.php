@@ -10,7 +10,9 @@
             <div class="pull-left info">
                 <p>{{ access()->user()->full_name }}</p>
                 <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('strings.backend.general.status.online') }}</a>
+               <div><p>
+                  {{ access()->user()->roles[0]->name }}
+               </p></div>
             </div><!--pull-left-->
         </div><!--user-panel-->
 
