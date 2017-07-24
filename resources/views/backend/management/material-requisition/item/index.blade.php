@@ -28,13 +28,29 @@
          <table id="projects-table" class="table table-condensed table-hover">
             <thead>
                <tr>
-                  <th>{{ trans('labels.backend.management.costing.table.name') }}</th>
-                  <th>{{ trans('labels.backend.management.costing.table.uploaded_by') }}</th>
-                  <th>{{ trans('labels.backend.management.costing.table.created_at') }}</th>
-                  <th>{{ trans('labels.backend.management.costing.table.updated_at') }}</th>
-                  <th>{{ trans('labels.general.actions') }}</th>
+                  <th>ID</th>
+                  <th>Category</th>
+                  <th>Sub-Category</th>
+                  <th>Item Type</th>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
                </tr>
             </thead>
+
+            <tbody>
+               @foreach($items as $project_item)
+               <tr>
+                  <td>{{ $project_item->id }}</td>
+                  <td>{{ $project_item->category }}</td>
+                  <td>{{ $project_item->sub_category }}</td>
+                  <td>{{ $project_item->item_type }}</td>
+                  <td>{{ $project_item->item }}</td>
+                  <td>{{ $project_item->quantity }}</td>
+                  <td>{{ $project_item->material }}</td>
+               </tr>
+               @endforeach
+            </tbody>
          </table>
       </div><!--table-responsive-->
    </div><!-- /.box-body -->
@@ -58,31 +74,6 @@
 {{ Html::script("js/backend/plugin/datatables/dataTables-extend.js") }}
 
 <script>
-$(function () {
-   $('#projects-table').DataTable({
-      dom: 'lfrtip',
-      processing: false,
-      serverSide: true,
-      autoWidth: false,
-      ajax: {
-         url: '{{ route("admin.management.costing.project.get") }}',
-         type: 'post',
-         data: {status: 1, trashed: false},
-         error: function (xhr, err) {
-            if (err === 'parsererror')
-            location.reload();
-         }
-      },
-      columns: [
-         {data: 'name', name: '{{config('management.costing.projects_table')}}.name'},
-         {data: 'user', name: '{{config('management.costing.user_table')}}.last_name'},
-         {data: 'created_at', name: '{{config('management.costing.projects_table')}}.created_at'},
-         {data: 'updated_at', name: '{{config('management.costing.projects_table')}}.updated_at'},
-         {data: 'actions', name: 'actions', searchable: false, sortable: false}
-      ],
-      order: [[0, "asc"]],
-      searchDelay: 500
-   });
-});
+
 </script>
 @endsection

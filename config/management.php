@@ -27,8 +27,8 @@ return [
          *
          * Used by Project's Table for setting up database relationship
          */
-         'item' => Item::class,
-         'items_table' => 'item',
+         'items' => Item::class,
+         'items_table' => 'items',
       ],
 
 

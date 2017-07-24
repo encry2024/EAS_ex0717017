@@ -16,6 +16,7 @@ Route::group([
          'as'     => 'project.',
          'namespace' => 'Management\Costing\Project'
       ], function() {
+         Route::get('project/{project}', 'ProjectController@show')->name('project_item.show');
          Route::get('project/list/upload', 'ProjectController@uploadProjectList')->name('upload');
          Route::post('project/list/import', 'ProjectController@importProjectList')->name('import');
 

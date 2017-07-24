@@ -24,7 +24,7 @@ trait ProjectAttribute
    */
    public function getShowButtonAttribute()
    {
-      return '<a href="'.route('admin.management.costing.project.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.management.costing.crudu.view').'"></i></a> ';
+      return '<a href="'.route('admin.management.costing.project.project_item.show', $this).'" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="'.trans('buttons.backend.management.costing.crudu.view').'"></i></a> ';
    }
 
    /**

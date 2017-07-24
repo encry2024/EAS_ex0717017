@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Management\Costing\Project;
 
 use App\Models\Management\Costing\Project\Project;
+use App\Models\Management\Costing\Item\Item;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,9 +56,11 @@ class ProjectController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function show($id)
+   public function show(Project $project, ManageProjectRequest $request)
    {
-      //
+      $items = Item::where('project_id', $project->id)->get();
+
+      return view('backend.management.material-requisition.item.index', compact('items'));
    }
 
    /**
