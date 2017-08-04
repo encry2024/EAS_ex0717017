@@ -2,6 +2,8 @@
 
 namespace App\Models\Management\MaterialRequisition\Request\Request\Traits\Relationship;
 
+use App\Model\Management\MaterialRequisition\Request\RequestProject\RequestProject;
+
 /**
 * Class RequestRelationship.
 */
@@ -12,10 +14,10 @@ trait RequestRelationship
    *
    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
    */
-   // public function projects()
-   // {
-   //    return $this->hasMany(config('management.costing.project'));
-   // }
+   public function request_projects()
+   {
+      return $this->hasMany(RequestProject::class);
+   }
 
    public function user()
    {

@@ -39,6 +39,10 @@ return [
          'material_requisition' => [
             'request' => [
                'request' => [
+                  'create' => 'Create',
+                  'edit' => 'Edit',
+                  'view' => 'View',
+                  'delete' => 'Delete',
                   'crud' => [
                      'create' => 'Create',
                      'edit' => 'Edit',

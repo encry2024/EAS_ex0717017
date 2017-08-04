@@ -108,9 +108,9 @@ class RequestController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-   public function show($id)
+   public function show(RequestModel $request)
    {
-      //
+      return view('backend.management.material-requisition.request.request.show', compact('request'));
    }
 
    /**

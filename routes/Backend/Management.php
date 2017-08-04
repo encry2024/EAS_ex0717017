@@ -49,6 +49,8 @@ Route::group([
          'namespace' => 'Management\MaterialRequisition\Request\Request'
       ], function() {
 
+         Route::get('request/{request}', 'RequestController@show')->name('project_item.show');
+
          Route::post('request/get', 'RequestTableController')->name('get');
 
          Route::resource('request/', 'RequestController');
