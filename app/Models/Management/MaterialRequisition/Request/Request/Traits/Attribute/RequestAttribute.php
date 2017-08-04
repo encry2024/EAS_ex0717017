@@ -119,13 +119,7 @@ trait RequestAttribute
          return $this->restore_button.$this->delete_permanently_button;
       }
 
-      if (access()->user()->hasRoles([1,2])) {
-         return
-         $this->show_button.
-         $this->edit_button.
-         $this->delete_button;
-      } else if(access()->user()->hasRoles([3,5,6])) {
-         return $this->show_button;
-      }
+
+      return $this->show_button;
    }
 }
