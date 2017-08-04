@@ -9,14 +9,14 @@
 @section('page-header')
 <h1>
    {{ trans('labels.backend.management.costing.management') }}
-   <small>{{ trans('labels.backend.management.costing.list') }}</small>
+   <small>{{ trans('labels.backend.management.costing.item.title') }}</small>
 </h1>
 @endsection
 
 @section('content')
 <div class="box box-success">
    <div class="box-header with-border">
-      <h3 class="box-title">{{ trans('labels.backend.management.costing.list') }}</h3>
+      <h3 class="box-title">{{ trans('labels.backend.management.costing.item.title') }}</h3>
 
       <div class="box-tools pull-right">
          @include('backend.management.costing.includes.partials.costing-management-header-buttons')
@@ -28,29 +28,17 @@
          <table id="projects-table" class="table table-condensed table-hover">
             <thead>
                <tr>
-                  <th>ID</th>
-                  <th>Category</th>
-                  <th>Sub-Category</th>
-                  <th>Item Type</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
+                  <th>{{ trans('labels.backend.management.costing.item.table.item') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.item.table.quantity') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.item.table.unit') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.item.table.material') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.item.table.created_at') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.item.table.updated_at') }}</th>
+                  @role(1,2)
+                  <th>{{ trans('labels.general.actions') }}</th>
+                  @endauth
                </tr>
             </thead>
-
-            <tbody>
-               @foreach($items as $project_item)
-               <tr>
-                  <td>{{ $project_item->id }}</td>
-                  <td>{{ $project_item->category }}</td>
-                  <td>{{ $project_item->sub_category }}</td>
-                  <td>{{ $project_item->item_type }}</td>
-                  <td>{{ $project_item->item }}</td>
-                  <td>{{ $project_item->quantity }}</td>
-                  <td>{{ $project_item->material }}</td>
-               </tr>
-               @endforeach
-            </tbody>
          </table>
       </div><!--table-responsive-->
    </div><!-- /.box-body -->
@@ -74,6 +62,33 @@
 {{ Html::script("js/backend/plugin/datatables/dataTables-extend.js") }}
 
 <script>
-
+$(function () {
+   $('#projects-table').DataTable({
+      dom: 'lfrtip',
+      processing: false,
+      serverSide: true,
+      autoWidth: false,
+      ajax: {
+         url: '{{ route("admin.management.costing.item.get") }}',
+         type: 'post',
+         data: {status: 1, trashed: false, project_id: "{{ $project->id }}"},
+         error: function (xhr, err) {
+            if (err === 'parsererror')
+            location.reload();
+         }
+      },
+      columns: [
+         {data: 'item', name: '{{config('management.management.costing.items_table')}}.item'},
+         {data: 'quantity', name: '{{config('management.management.costing.items_table')}}.quantity'},
+         {data: 'unit', name: '{{config('management.management.costing.items_table')}}.unit'},
+         {data: 'material', name: '{{config('management.management.costing.items_table')}}.material'},
+         {data: 'created_at', name: '{{config('management.management.costing.items_table')}}.created_at'},
+         {data: 'updated_at', name: '{{config('management.management.costing.items_table')}}.updated_at'},
+         {data: 'actions', name: 'actions', searchable: false, sortable: false}
+      ],
+      order: [[0, "asc"]],
+      searchDelay: 500
+   });
+});
 </script>
 @endsection

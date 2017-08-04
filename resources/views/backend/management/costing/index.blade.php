@@ -28,10 +28,10 @@
          <table id="projects-table" class="table table-condensed table-hover">
             <thead>
                <tr>
-                  <th>{{ trans('labels.backend.management.costing.table.name') }}</th>
-                  <th>{{ trans('labels.backend.management.costing.table.uploaded_by') }}</th>
-                  <th>{{ trans('labels.backend.management.costing.table.created_at') }}</th>
-                  <th>{{ trans('labels.backend.management.costing.table.updated_at') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.project.table.name') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.project.table.uploaded_by') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.project.table.created_at') }}</th>
+                  <th>{{ trans('labels.backend.management.costing.project.table.updated_at') }}</th>
                   <th>{{ trans('labels.general.actions') }}</th>
                </tr>
             </thead>

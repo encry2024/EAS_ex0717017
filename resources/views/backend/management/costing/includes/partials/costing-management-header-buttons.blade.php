@@ -1,7 +1,8 @@
-@role(2)
 <div class="pull-right mb-10 hidden-sm hidden-xs">
    {{ link_to_route('admin.management.costing.project.index', trans('menus.backend.costing_management.all'), [], ['class' => 'btn btn-primary btn-xs']) }}
+   @role(2)
    {{ link_to_route('admin.management.costing.project.upload', trans('menus.backend.costing_management.upload'), [], ['class' => 'btn btn-info btn-xs']) }}
+   @endauth
 </div><!--pull right-->
 
 <div class="pull-right mb-10 hidden-lg hidden-md">
@@ -21,4 +22,3 @@
 </div><!--pull right-->
 
 <div class="clearfix"></div>
-@endauth

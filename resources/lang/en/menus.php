@@ -15,10 +15,17 @@ return [
 
    'backend' => [
       'costing_management' => [
-         'title' => 'Costing Management',
+         'title' => 'Costing',
 
          'all' => 'All Projects',
          'upload' => 'Upload Project List'
+      ],
+
+      'material_requisition' => [
+         'title' => 'Material Requisition',
+
+         'all' => 'All Requests',
+         'create' => 'Create Request'
       ],
 
       'access' => [

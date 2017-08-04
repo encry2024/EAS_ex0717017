@@ -14,7 +14,7 @@ trait ProjectRelationship
    */
    public function items()
    {
-      return $this->hasMany(config('management.costing.item'));
+      return $this->hasMany(config('management.management.costing.item'));
    }
 
    public function user()

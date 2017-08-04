@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Backend\Management\Costing\Item;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Yajra\Datatables\Facades\Datatables;
+use App\Repositories\Backend\Management\Costing\Item\ItemRepository;
+use App\Http\Requests\Backend\Management\Costing\Item\ManageItemRequest;
 
 class ItemTableController extends Controller
 {
@@ -15,7 +17,7 @@ class ItemTableController extends Controller
    /**
    * @param UserRepository $users
    */
-   public function __construct(ProjectRepository $items)
+   public function __construct(ItemRepository $items)
    {
       $this->items = $items;
    }
@@ -25,21 +27,15 @@ class ItemTableController extends Controller
    *
    * @return mixed
    */
-   public function __invoke(ManageProjectRequest $request)
+   public function __invoke(ManageItemRequest $request)
    {
       return Datatables::of(
-         $this->projects->getForDataTable($request->get('status'), $request->get('trashed')))
-         ->escapeColumns(['name'])
-         ->addColumn('user', function ($project) {
-            return $project->user->count() ?
-            $project->user->last_name :
-            trans('labels.general.none');
-         })
-         ->addColumn('actions', function ($user) {
-            return $user->action_buttons;
-         })
-         ->withTrashed()
-         ->make(true);
-      }
+      $this->items->getForDataTable($request->get('status'), $request->get('trashed'), $request->get('project_id')))
+      ->escapeColumns(['item'])
+      ->addColumn('actions', function ($user) {
+         return $user->action_buttons;
+      })
+      ->withTrashed()
+      ->make(true);
    }
 }

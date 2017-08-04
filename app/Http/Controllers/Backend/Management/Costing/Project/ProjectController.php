@@ -58,9 +58,8 @@ class ProjectController extends Controller
    */
    public function show(Project $project, ManageProjectRequest $request)
    {
-      $items = Item::where('project_id', $project->id)->get();
 
-      return view('backend.management.material-requisition.item.index', compact('items'));
+      return view('backend.management.material-requisition.item.index')->withProject($project);
    }
 
    /**

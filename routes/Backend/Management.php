@@ -25,8 +25,35 @@ Route::group([
          Route::resource('project/', 'ProjectController');
 
       });
+
+      Route::group([
+         'as' => 'item.',
+         'namespace' => 'Management\Costing\Item'
+      ], function() {
+         Route::post('items/get', 'ItemTableController')->name('get');
+
+         Route::get('fetch_items/{project_id}', 'ItemController@fetchProjecBasedItems')->name('by.project_based');
+
+         Route::get('item/{item_id}/information', 'ItemController@fetchSelecteditemInformation')->name('get.information');
+
+         Route::resource('item/', 'ItemController');
+      });
    });
 
+   Route::group([
+      'prefix' => 'material_requisition',
+      'as'     => 'material_requisition.'
+   ], function() {
+      Route::group([
+         'as'        => 'request.',
+         'namespace' => 'Management\MaterialRequisition\Request\Request'
+      ], function() {
 
+         Route::post('request/get', 'RequestTableController')->name('get');
+
+         Route::resource('request/', 'RequestController');
+
+      });
+   });
 
 });

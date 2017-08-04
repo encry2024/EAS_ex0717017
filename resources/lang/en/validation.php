@@ -129,6 +129,19 @@ return [
                   'project_file' => 'Project File',
                   'subject'      => 'Subject'
                ]
+            ],
+
+            'material_requisition' => [
+               'request' => [
+                  'request' => [
+                     'mr_control_number'        => 'M.R Control Number',
+                     'date_needed'              => 'Date Needed',
+                     'date_needed_placeholder'  => 'Date Needed (format-example: 2017-04-04)',
+                     'remarks'                  => 'Remarks',
+                     'date'                     => 'Date',
+                     'project_id'               => 'Project'
+                  ]
+               ]
             ]
          ],
 

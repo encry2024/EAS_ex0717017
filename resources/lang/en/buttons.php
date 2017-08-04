@@ -24,7 +24,32 @@ return [
                'update' => 'Update',
                'upload' => 'Upload'
             ],
-            'restore_project'   => 'Restore Project'
+
+            'restore_project'   => 'Restore Project',
+
+            'item' => [
+               'adu' => [
+                  'add'     => 'Add Stocks',
+                  'edit'    => 'Edit',
+                  'delete'  => 'Delete'
+               ]
+            ]
+         ],
+
+         'material_requisition' => [
+            'request' => [
+               'request' => [
+                  'crud' => [
+                     'create' => 'Create',
+                     'edit' => 'Edit',
+                     'view' => 'View',
+                     'delete' => 'Delete',
+
+                  ],
+
+                  'restore' => 'Restore Request'
+               ]
+            ]
          ]
       ],
 

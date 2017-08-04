@@ -39,11 +39,58 @@ return [
             'upload' => 'Upload Project File',
             'list'   => 'Uploaded Project List',
 
-            'table' => [
-               'name'         => 'Project Name',
-               'uploaded_by'  => 'Uploaded By',
-               'created_at'   => 'Date Added',
-               'updated_at'   => 'Last Updated',
+            'project' => [
+               'table' => [
+                  'name'         => 'Project Name',
+                  'uploaded_by'  => 'Uploaded By',
+                  'created_at'   => 'Date Added',
+                  'updated_at'   => 'Last Updated',
+               ],
+            ],
+
+            'item' => [
+               'title' => 'Item List Per Project',
+
+               'table' => [
+                  'item'         => 'Item',
+                  'quantity'     => 'Quantity',
+                  'current_quantity'   => 'Current Quantity',
+                  'item_and_description' => 'Item and Description',
+                  'unit'         => 'Unit',
+                  'remarks'      => 'Remarks',
+                  'description'  => 'Description',
+                  'sub_category' => 'Sub Category',
+                  'category'     => 'Category',
+                  'material'     => 'Price/Item',
+                  'created_at'   => 'Date Added',
+                  'updated_at'   => 'Last Updated',
+               ]
+            ]
+         ],
+
+         'material_requisition' => [
+            'management' => 'Material Requisition Management',
+
+            'request' => [
+               'request' => [
+                  'request' => [
+                     'title'                 => 'Request List',
+
+                     'create'                => 'Create Request',
+                     'edit'                  => 'Edit Request',
+                     'delete'                => 'Delete Request',
+
+                     'table' => [
+                        'mr_control_number'  => 'M.R Control Number',
+                        'user'               => 'Prepared By',
+                        'project'            => 'Project Title',
+                        'date_needed'        => 'Date Needed',
+                        'remarks'            => 'Remarks',
+                        'created_at'         => 'Date Added',
+                        'updated_at'         => 'Date Updated'
+                     ]
+                  ]
+               ]
             ]
          ]
       ],
