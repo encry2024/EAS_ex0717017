@@ -12,6 +12,21 @@ Route::group([
       'prefix' => 'costing',
       'as'     => 'costing.',
    ], function() {
+
+      Route::get('export_pdf/{purchase_order}', function(\App\Models\Management\Costing\PurchaseOrder\PurchaseOrder $purchase_order) {
+         $request_projects = \App\Models\Management\MaterialRequisition\Request\RequestProject\RequestProject::whereRequestId($purchase_order->request_id)->whereSupplierId($purchase_order->supplier_id)->get();
+
+         return view('backend.management.costing.purchase_order', compact('request_projects', 'purchase_order'));
+      })->name('export.pdf');
+
+      Route::group([
+         'prefix' => 'request',
+         'as'     => 'request.',
+         'namespace' => 'Management\MaterialRequisition\Request\Request'
+      ], function() {
+         Route::post('request/store', 'RequestController@exportToPDF')->name('store');
+      });
+
       Route::group([
          'as'     => 'project.',
          'namespace' => 'Management\Costing\Project'
@@ -55,6 +70,11 @@ Route::group([
 
          Route::get('request/{request}/supplier/{supplier}/create/po', 'RequestController@createPurchaseOrder')->name('create.po');
          Route::get('request/{request_project}/create/single/po', 'RequestController@createSinglePurchaseOrder')->name('create.single.po');
+
+
+         Route::get('purchase_order/', function() {
+            return view('backend.management.costing.purchase_order');
+         });
       });
    });
 

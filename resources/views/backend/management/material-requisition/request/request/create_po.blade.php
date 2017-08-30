@@ -10,9 +10,11 @@
 @endsection
 
 @section('content')
-{{ Form::open(['route' => 'admin.management.costing.project.import', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+{{ Form::open(['route' => 'admin.management.costing.request.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
 
 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+<input type="hidden" name="request" value="{{ $request->id }}">
+<input type="hidden" name="supplier" value="{{ $supplier }}">
 
 <div class="box box-success">
    <div class="box-header with-border">
@@ -24,6 +26,79 @@
    </div><!-- /.box-header -->
 
    <div class="box-body">
+      <div class="form-group">
+         {{ Form::label('vendor', 'Vendor', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('vendor', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Vendor']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('vendor_address', 'Vendor Address', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('vendor_address', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Vendor Address']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('payment_terms', 'Payment Terms',
+         ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('payment_terms', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Payment Terms']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('order_date', 'Order Date', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('order_date', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Order Date']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('phone', 'Phone', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('phone', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Phone']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('verbal', 'Verbal', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('verbal', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Verbal']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('quotation', 'Quotation', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('quotation', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Quotation']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('purchaser', 'Purchaser', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('purchaser', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Purchaser']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
+      <div class="form-group">
+         {{ Form::label('manager', 'Manager', ['class' => 'col-lg-2 control-label']) }}
+
+         <div class="col-lg-10">
+            {{ Form::text('manager', '', ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => 'Manager']) }}
+         </div><!--col-lg-10-->
+      </div><!--form control-->
+
       <table class="table">
          <thead>
             <th>ITEM NO.</th>
@@ -49,6 +124,7 @@
             @endforeach
          </tbody>
       </table>
+
    </div><!--box-->
 
    <div class="box box-info">
@@ -58,7 +134,7 @@
          </div><!--pull-left-->
 
          <div class="pull-right">
-            {{ Form::submit('Export to PDF', ['class' => 'btn btn-success btn-xs']) }}
+            {{ Form::submit('Export data to PDF', ['class' => 'btn btn-success btn-xs']) }}
          </div><!--pull-right-->
 
          <div class="clearfix"></div>

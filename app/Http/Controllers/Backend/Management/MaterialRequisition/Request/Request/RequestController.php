@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Backend\Management\MaterialRequisition\Request\Request;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request as DataRequest;
 use App\Http\Controllers\Controller;
 
 use App\Models\Management\Costing\Project\Project;
 use App\Models\Management\MaterialRequisition\Request\RequestProject\RequestProject;
 use App\Models\Management\Costing\Item\Item;
 use App\Models\Management\MaterialRequisition\Request\Request\Request as RequestModel;
+use App\Models\Management\Costing\PurchaseOrder\PurchaseOrder;
 
 use App\Repositories\Backend\Management\MaterialRequisition\Request\Request\RequestRepository;
 use App\Http\Requests\Backend\Management\MaterialRequisition\Request\Request\ManageRequestRequest;
 
 use Auth;
+use PDF;
 
 class RequestController extends Controller
 {
@@ -165,8 +167,26 @@ class RequestController extends Controller
    public function createPurchaseOrder(RequestModel $request, $supplier)
    {
       $request_projects = RequestProject::whereRequestId($request->id)->whereSupplierId($supplier)->get();
-      //dd($request_projects);
 
-      return view('backend.management.material-requisition.request.request.create_po', compact('request_projects'));
+
+      return view('backend.management.material-requisition.request.request.create_po', compact('request_projects', 'request', 'supplier'));
+   }
+
+   public function exportToPDF(DataRequest $request)
+   {
+      $purchase_order = new PurchaseOrder();
+      $purchase_order->vendor = $request->get('vendor');
+      $purchase_order->vendor_address = $request->get('vendor_address');
+      $purchase_order->phone = $request->get('phone');
+      $purchase_order->manager = $request->get('manager');
+      $purchase_order->quotation = $request->get('quotation');
+      $purchase_order->verbal = $request->get('verbal');
+      $purchase_order->purchaser = $request->get('purchaser');
+      $purchase_order->payment_terms = $request->get('payment_terms');
+      $purchase_order->request_id = $request->get('request');
+      $purchase_order->supplier_id = $request->get('supplier');
+
+      if($purchase_order->save())
+      return redirect()->route('admin.management.costing.export.pdf', $purchase_order->id);
    }
 }
