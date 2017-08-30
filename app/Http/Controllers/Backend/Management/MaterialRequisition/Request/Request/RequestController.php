@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Management\Costing\Project\Project;
+use App\Models\Management\MaterialRequisition\Request\RequestProject\RequestProject;
 use App\Models\Management\Costing\Item\Item;
 use App\Models\Management\MaterialRequisition\Request\Request\Request as RequestModel;
-use App\Models\Management\MaterialRequisition\Request\RequestProject\RequestProject;
 
 use App\Repositories\Backend\Management\MaterialRequisition\Request\Request\RequestRepository;
 use App\Http\Requests\Backend\Management\MaterialRequisition\Request\Request\ManageRequestRequest;
@@ -54,7 +54,7 @@ class RequestController extends Controller
    */
    public function store(Request $request)
    {
-
+      // dd($request->all());
       $request_model = new RequestModel();
       $request_model->user_id = Auth::user()->id;
       $request_model->mr_control_number = $request->get('mr_control_number');
@@ -96,7 +96,18 @@ class RequestController extends Controller
                         }
                      }
                   }
+
+                  if(strpos($key, 'supplier') !== FALSE)  {
+                     foreach($value as $item_id => $supplier_id) {
+                        if($item_id == $request_project->item_id) {
+                           $request_project->supplier_id = $supplier_id;
+                           $request_project->save();
+                        }
+                     }
+                  }
                }
+
+               return redirect()->route('admin.management.material_requisition.request.index')->withFlashSuccess('Request was successfully created.');
             }
          }
       }
@@ -110,7 +121,11 @@ class RequestController extends Controller
    */
    public function show(RequestModel $request)
    {
-      return view('backend.management.material-requisition.request.request.show', compact('request'));
+      $suppliers = RequestProject::whereRequestId($request->id)->groupBy('request_id')->get();
+
+      // dd($supplier);
+
+      return view('backend.management.material-requisition.request.request.show', compact('request', 'suppliers'));
    }
 
    /**
@@ -145,5 +160,13 @@ class RequestController extends Controller
    public function destroy($id)
    {
       //
+   }
+
+   public function createPurchaseOrder(RequestModel $request, $supplier)
+   {
+      $request_projects = RequestProject::whereRequestId($request->id)->whereSupplierId($supplier)->get();
+      //dd($request_projects);
+
+      return view('backend.management.material-requisition.request.request.create_po', compact('request_projects'));
    }
 }

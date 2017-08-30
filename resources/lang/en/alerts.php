@@ -21,6 +21,10 @@ return [
                'deleted' => 'Project :project was successfully deleted.',
                'updated' => 'Project :project was successfully updated.'
             ]
+         ],
+
+         'supplier' => [
+            'created' => 'Supplier list was successfully uploaded.',
          ]
       ],
 

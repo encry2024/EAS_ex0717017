@@ -29,12 +29,25 @@
 
          <li class="header">{{ trans('menus.backend.sidebar.management') }}</li>
 
+         <!-- Costing Management -->
+
          <li class="{{ active_class(Active::checkUriPattern('admin/management/costing/project*')) }}">
             <a href="{{ route('admin.management.costing.project.index') }}">
                <i class="fa fa-money"></i>
                <span>{{ trans('menus.backend.costing_management.title') }}</span>
             </a>
          </li>
+
+         <!-- Supplier Management -->
+
+         <li class="{{ active_class(Active::checkUriPattern('admin/management/supplier*')) }}">
+            <a href="{{ route('admin.management.supplier.index') }}">
+               <i class="fa fa-truck"></i>
+               <span>{{ trans('menus.backend.supplier.title') }}</span>
+            </a>
+         </li>
+
+         <!-- Material Requisition Management -->
 
          <li class="{{ active_class(Active::checkUriPattern('admin/management/material_requisition/request*')) }}">
             <a href="{{ route('admin.management.material_requisition.request.index') }}">

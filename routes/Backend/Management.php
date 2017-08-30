@@ -48,14 +48,25 @@ Route::group([
          'as'        => 'request.',
          'namespace' => 'Management\MaterialRequisition\Request\Request'
       ], function() {
-
-         Route::get('request/{request}', 'RequestController@show')->name('project_item.show');
-
          Route::post('request/get', 'RequestTableController')->name('get');
 
          Route::resource('request/', 'RequestController');
+         Route::get('request/{request}', 'RequestController@show')->name('project_item.show');
 
+         Route::get('request/{request}/supplier/{supplier}/create/po', 'RequestController@createPurchaseOrder')->name('create.po');
+         Route::get('request/{request_project}/create/single/po', 'RequestController@createSinglePurchaseOrder')->name('create.single.po');
       });
+   });
+
+   Route::group([
+      'as'     => 'supplier.',
+      'namespace' => 'Management\Supplier'
+   ], function() {
+      Route::post('request/get', 'SupplierTableController')->name('get');
+
+      Route::resource('supplier/', 'SupplierController');
+
+      Route::post('supplier/upload', 'SupplierController@uploadSupplier')->name('upload');
    });
 
 });

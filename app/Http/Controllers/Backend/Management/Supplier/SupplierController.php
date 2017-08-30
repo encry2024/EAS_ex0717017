@@ -1,22 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Management\Costing\Item;
+namespace App\Http\Controllers\Backend\Management\Supplier;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Management\Costing\Item\Item;
-use App\Models\Management\Supplier\Supplier;
 
-class ItemController extends Controller
+use App\Models\Management\Supplier\Supplier;
+use App\Repositories\Backend\Management\Supplier\SupplierRepository;
+use App\Http\Requests\Backend\Management\Supplier\ManageSupplierRequest;
+use App\Http\Requests\Backend\Management\Supplier\UploadSupplierRequest;
+
+class SupplierController extends Controller
 {
+   protected $suppliers;
+
+   public function __construct(SupplierRepository $suppliers)
+   {
+      $this->suppliers = $suppliers;
+   }
+
    /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
    */
-   public function index()
+   public function index(ManageSupplierRequest $request)
    {
-      //
+      return view('backend.management.supplier.index');
    }
 
    /**
@@ -26,7 +36,7 @@ class ItemController extends Controller
    */
    public function create()
    {
-      //
+      return view('backend.management.supplier.create');
    }
 
    /**
@@ -85,48 +95,14 @@ class ItemController extends Controller
       //
    }
 
-   public function fetchProjecBasedItems($project_id)
+   public function uploadSupplier(UploadSupplierRequest $request)
    {
-      $itemJson = array();
-      $items = Item::whereProjectId($project_id)->get();
+      $this->suppliers->create([
+      'data' => $request->only(
+         'supplier_file'
+         )
+      ]);
 
-      foreach($items as $item) {
-         $itemJson[] = [
-            'id' => $item->id,
-            'item' => $item->item,
-
-         ];
-      }
-
-      return json_encode($itemJson);
-   }
-
-   public function fetchSelecteditemInformation($item_id)
-   {
-      $itemInformation = array();
-      $item = Item::find($item_id);
-
-      $suppliers = Supplier::whereProductName($item->item)->get();
-
-      // dd($suppliers);
-
-      if($item->quantity == "") {
-         $itemJson[] = [
-            'item_id' => $item->id,
-            'quantity' => $item->quantity,
-            'unit' => $item->unit,
-            'material' => $item->material,
-            'suppliers' => $suppliers
-         ];
-      } else {
-         $itemJson[] = [
-            'item_id' => $item->id,
-            'quantity' => $item->quantity,
-            'unit' => $item->unit,
-            'material' => $item->material
-         ];
-      }
-
-      return json_encode($itemJson);
+      return redirect()->route('admin.management.supplier.index')->withFlashSuccess(trans('alerts.backend.management.supplier.created'));
    }
 }

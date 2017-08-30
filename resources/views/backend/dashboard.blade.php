@@ -19,7 +19,7 @@
             {!! trans('strings.backend.welcome') !!}
         </div><!-- /.box-body -->
     </div><!--box box-success-->
-
+    
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('history.backend.recent_history') }}</h3>

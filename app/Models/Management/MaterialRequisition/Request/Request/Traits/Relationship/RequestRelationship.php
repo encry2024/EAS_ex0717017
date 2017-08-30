@@ -2,7 +2,7 @@
 
 namespace App\Models\Management\MaterialRequisition\Request\Request\Traits\Relationship;
 
-use App\Model\Management\MaterialRequisition\Request\RequestProject\RequestProject;
+use App\Models\Management\MaterialRequisition\Request\RequestProject\RequestProject;
 
 /**
 * Class RequestRelationship.
@@ -23,5 +23,4 @@ trait RequestRelationship
    {
       return $this->belongsTo(config('auth.providers.users.model'));
    }
-
 }

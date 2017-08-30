@@ -14,6 +14,11 @@ return [
    */
 
    'backend' => [
+      'supplier' => [
+         'all' => 'Supplier\'s List',
+         'upload' => 'Upload Supplier\'s List'
+      ],
+
       'costing_management' => [
          'title' => 'Costing',
 
@@ -26,6 +31,13 @@ return [
 
          'all' => 'All Requests',
          'create' => 'Create Request'
+      ],
+
+      'supplier' => [
+         'title' => 'Supply Management',
+
+         'all' => 'All Suppliers',
+         'upload' => 'Upload Suppliers List'
       ],
 
       'access' => [

@@ -120,6 +120,10 @@ return [
 
       'backend' => [
          'management' => [
+            'supplier' => [
+               'supplier_list' => 'Supplier List'
+            ],
+
             'costing' => [
                'project' => [
                   'name'         => 'Project Name',

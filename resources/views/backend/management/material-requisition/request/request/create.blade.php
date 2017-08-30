@@ -27,7 +27,7 @@
       <div class="form-group">
          {{ Form::label('project_id', trans('validation.attributes.backend.management.material_requisition.request.request.project_id'), ['class' => 'col-lg-2 control-label']) }}
 
-         <div class="col-lg-10">
+         <div class="col-lg-9">
             <select data-placeholder="Choose a Project..." id="projectDropdown" name="project" class="form-control chosen-select project-select">
                <option value=""></option>
                @foreach($projects as $project)
@@ -41,37 +41,38 @@
          {{ Form::label('mr_control_number', trans('validation.attributes.backend.management.material_requisition.request.request.mr_control_number'),
          ['class' => 'col-lg-2 control-label']) }}
 
-         <div class="col-lg-10">
+         <div class="col-lg-9">
             {{ Form::text('mr_control_number', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.management.material_requisition.request.request.mr_control_number')]) }}
-         </div><!--col-lg-10-->
+         </div><!--col-lg-9-->
       </div><!--form control-->
 
       <div class="form-group">
          {{ Form::label('date', trans('validation.attributes.backend.management.material_requisition.request.request.date'),
          ['class' => 'col-lg-2 control-label']) }}
 
-         <div class="col-lg-10">
+         <div class="col-lg-9">
             {{ Form::text('date', date('Y-m-d'), ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.management.material_requisition.request.request.date')]) }}
-         </div><!--col-lg-10-->
+         </div><!--col-lg-9-->
       </div><!--form control-->
 
       <div class="form-group">
          {{ Form::label('date_needed', trans('validation.attributes.backend.management.material_requisition.request.request.date_needed'),
          ['class' => 'col-lg-2 control-label']) }}
 
-         <div class="col-lg-10">
+         <div class="col-lg-9">
             {{ Form::text('date_needed', null, ['class' => 'form-control', 'maxlength' => '191', 'required' => 'required', 'placeholder' => trans('validation.attributes.backend.management.material_requisition.request.request.date_needed_placeholder')]) }}
-         </div><!--col-lg-10-->
+         </div><!--col-lg-9-->
       </div><!--form control-->
 
 
       <table id="requests-table" class="table table-condensed table-hover">
          <thead>
             <tr>
-               <th>{{ trans('labels.backend.management.costing.item.table.item_and_description') }}</th>
-               <th>{{ trans('labels.backend.management.costing.item.table.quantity') }}</th>
-               <th>{{ trans('labels.backend.management.costing.item.table.unit') }}</th>
-               <th>{{ trans('labels.backend.management.costing.item.table.material') }}</th>
+               <th class="col-lg-3">{{ trans('labels.backend.management.costing.item.table.item_and_description') }}</th>
+               <th class="col-lg-2">{{ trans('labels.backend.management.costing.item.table.quantity') }}</th>
+               <th class="col-lg-2">{{ trans('labels.backend.management.costing.item.table.unit') }}</th>
+               <th class="col-lg-2">{{ trans('labels.backend.management.costing.item.table.material') }}</th>
+               <th class="col-lg-3">{{ trans('labels.backend.management.costing.item.table.supplier') }}</th>
                <th>{{ trans('labels.general.actions') }}</th>
             </tr>
          </thead>
@@ -89,10 +90,9 @@
          </tfoot>
 
          <tbody id="items-container">
-            <tr>
-
+            <!-- <tr>
                <td>
-                  <select data-placeholder="Item and Description" id="itemDropdown" name="item[]" class="form-control chosen-select iDown">
+                  <select data-placeholder="Item and Description" id="itemDropdown" name="item[]" class="form-control chosen-select itemDropDown">
                   </select>
                </td>
                <td>
@@ -107,7 +107,7 @@
                <td>
                   <div id="actions"></div>
                </td>
-            </tr>
+            </tr> -->
          </tbody>
       </table>
    </div><!--box-->
@@ -129,32 +129,64 @@
    {{ Form::close() }}
 
    <script type="text/javascript">
-   $(document).ready(function() {
-      $('#projectDropdown').chosen().change(function() {
-         var project_id = $('#projectDropdown').val();
-         var fetchProjectBasedItemUrl = "{{ route('admin.management.costing.item.by.project_based', ':project_id') }}";
-         fetchProjectBasedItemUrl = fetchProjectBasedItemUrl.replace(':project_id', project_id);
+      $(document).ready(function() {
+         var items = [];
+         var project_id = '';
 
-         $('.iDown').empty();
+         $('#projectDropdown').chosen().change(function() {
+            project_id  = $('#projectDropdown').val();
+            var fetchProjectBasedItemUrl = "{{ route('admin.management.costing.item.by.project_based', ':project_id') }}";
+            fetchProjectBasedItemUrl = fetchProjectBasedItemUrl.replace(':project_id', project_id);
 
-         $(".iDown").append('<option value=""></option>');
-         $.getJSON(fetchProjectBasedItemUrl, function (data) {
-            var items = [];
-            $.each(data, function(key, val) {
-               items.push('<option value="' + val.id + '">' + val.item + '</option>')
-            })
+            $("#requests-table").find("tr:gt(1)").remove();
 
-            $(".iDown").append(items);
-            $(".iDown").trigger("chosen:updated");
-            $(".iDown").chosen({ width: "100%" }).change(function() {
+            //$(".itemDropDown").append('<option value=""></option>');
+            $.getJSON(fetchProjectBasedItemUrl, function (data) {
+               $.each(data, function(key, val) {
+                  items.push('<option value="' + val.id + '">' + val.item + '</option>')
+               })
+            });
+         });
+
+         $("#add_more_item").click(function() {
+            $("#items-container").append(
+               "<tr>"+
+                  "<td>"+
+                     "<select data-placeholder='Item and Description' id='itemDropdown' name='item[]' class='form-control chosen-select itemDropDown'>"+
+                        '<option value=""></option>' +
+                        items +
+                     "</select>"+
+                  "</td>"+
+                  "<td>"+
+                     "<input type='text' class='form-control' id='quantity'>"+
+                  "</td>"+
+                  "<td>"+
+                     "<input type='text' class='form-control' id='unit'>"+
+                  "</td>"+
+                  "<td>"+
+                     "<input type='text' class='form-control' id='material'>"+
+                  "</td>"+
+                  "<td>"+
+                     "<select data-placeholder='Suppliers' id='supplierDropdown' name='supplier[]' class='form-control chosen-select supplierDropdown' >"+
+                     "<option value='' ></option>" +
+                     "</select>"+
+                  "</td>"+
+                  "<td>"+
+                     "<div id='actions'><a class='btn btn-xs btn-danger' id='remove_item'><i class='fa fa-remove' data-toggle='tooltip' data-placement='top' title='Remove Item'></i></a></div>"+
+                  "</td>"+
+               "</tr>"
+            );
+
+
+            $(".itemDropDown").chosen({ width: "100%" }).change(function() {
                var item_id = $(this).val();
                var closestTr = $(this).closest('tr');
 
                var fetchSelecteditemInformation = "{{ route('admin.management.costing.item.get.information', ':item_id') }}";
                fetchSelecteditemInformation = fetchSelecteditemInformation.replace(':item_id', item_id);
 
-               closestTr.find('#actions').empty();
-
+               //closestTr.find('#actions').empty();
+               closestTr.find('.supplierDropdown').empty();
                $.getJSON(fetchSelecteditemInformation, function (data) {
                   var itemInformation = [];
                   $.each(data, function(key, val) {
@@ -167,40 +199,27 @@
                      closestTr.find('#material').val(val.material);
                      closestTr.find('#material').attr('name', 'material['+val.item_id+']');
 
-                     closestTr.find('#actions').append(val.action);
+                     closestTr.find('#supplierDropdown').attr('name', 'supplier[' + val.item_id + ']');
 
-                  })
+                     $.each(val.suppliers, function(key, val) {
+                        closestTr.find('#supplierDropdown').append(
+                           "<option value='" + val.id + "'>" + val.name + "</option>"
+                        );
+
+                        console.log(val);
+                     });
+                  });
+                  $(".supplierDropdown").chosen().trigger("chosen:updated");
                });
-            });
+
+
+            })
+         });
+
+
+         $('#requests-table').on('click', '#remove_item', function() {
+            $(this).closest ('tr').remove ();
          });
       });
-
-      $("#add_more_item").click(function(){
-         $("#items-container").append(
-            "<tr>"+
-               "<td>"+
-                  "<select data-placeholder='Item and Description' id='itemDropdown' name='item[]' class='form-control chosen-select iDown'></select>"+
-               "</td>"+
-               "<td>"+
-                  "<input type='text' class='form-control' id='quantity'>"+
-               "</td>"+
-               "<td>"+
-                  "<input type='text' class='form-control' id='unit'>"+
-               "</td>"+
-               "<td>"+
-                  "<input type='text' class='form-control' id='material'>"+
-               "</td>"+
-               "<td>"+
-                  "<div id='actions'></div>"+
-               "</td>"+
-            "</tr>"
-         );
-      });
-
-
-      $('#requests-table').on('click', '#remove_item', function(){
-         $(this).closest ('tr').remove ();
-      });
-   });
    </script>
-   @endsection
+@endsection

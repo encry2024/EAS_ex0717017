@@ -19,6 +19,10 @@ return [
             'project' => [
                'create_error' => 'There was a problem uploading this project. Please try again.'
             ]
+         ],
+
+         'supplier' => [
+            'create_error' => 'There was a problem uploading this supplier\'s list. Please try again.'
          ]
       ],
 

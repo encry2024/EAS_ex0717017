@@ -33,6 +33,23 @@ return [
 
    'backend' => [
       'management' => [
+         'supplier' => [
+            'management' => 'Supplier Management',
+
+            'upload' => 'Upload Supplier Management',
+            'list'   => 'Uploaded Supplier List',
+
+            'table' => [
+               'name' => 'Supplier\'s Name',
+               'product_name' => 'Product Description',
+               'brand' => 'Brand',
+               'unit_price' => 'Unit Price',
+               'type_of_product' => 'Type of Product',
+               'created_at' => 'Date Added',
+               'updated_at' => 'Date Updated'
+            ]
+         ],
+
          'costing' => [
             'management' => 'Costing Management',
 
@@ -61,6 +78,7 @@ return [
                   'description'  => 'Description',
                   'sub_category' => 'Sub Category',
                   'category'     => 'Category',
+                  'supplier'     => 'Supplier',
                   'material'     => 'Price/Item',
                   'created_at'   => 'Date Added',
                   'updated_at'   => 'Last Updated',

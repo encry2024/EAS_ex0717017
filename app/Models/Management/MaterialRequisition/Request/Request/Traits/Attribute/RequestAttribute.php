@@ -119,7 +119,6 @@ trait RequestAttribute
          return $this->restore_button.$this->delete_permanently_button;
       }
 
-
       return $this->show_button;
    }
 }

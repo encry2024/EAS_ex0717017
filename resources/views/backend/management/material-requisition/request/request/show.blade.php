@@ -51,6 +51,11 @@
          </div><!--col-lg-10-->
       </div><!--form control-->
 
+      <hr>
+      @foreach($suppliers as $getSupplierLink)
+         <a href="{{ route('admin.management.material_requisition.request.create.po', ['request' => $request->id, 'supplier' => $getSupplierLink->supplier_id]) }}" class="btn btn-xs btn-primary">Create P.O for {{ $getSupplierLink->supplier->name }}</a>
+      @endforeach
+      <hr>
 
       <table id="requests-table" class="table table-condensed table-hover">
          <thead>
@@ -59,16 +64,29 @@
                <th>{{ trans('labels.backend.management.costing.item.table.quantity') }}</th>
                <th>{{ trans('labels.backend.management.costing.item.table.unit') }}</th>
                <th>{{ trans('labels.backend.management.costing.item.table.material') }}</th>
+               <th>{{ trans('labels.backend.management.costing.item.table.supplier') }}</th>
+               <th>Action</th>
             </tr>
          </thead>
 
          <tbody id="items-container">
             @foreach($request->request_projects as $request_project)
             <tr>
-               <td>{{ $request_project->item->item }}</td>
-               <td>{{ $request_project->ordered_quantity }}</td>
-               <td>{{ $request_project->unit }}</td>
-               <td>{{ $request_project->material }}</td>
+               @if(($request_project->supplier_id == "") || ($request_project->supplier_id == 0))
+                  <td>{{ $request_project->item->item }}</td>
+                  <td>{{ $request_project->ordered_quantity }}</td>
+                  <td>{{ $request_project->unit }}</td>
+                  <td>{{ $request_project->material }}</td>
+                  <td>No supplier</td>
+                  <td></td>
+               @else
+                  <td>{{ $request_project->item->item }}</td>
+                  <td>{{ $request_project->ordered_quantity }}</td>
+                  <td>{{ $request_project->unit }}</td>
+                  <td>{{ $request_project->material }}</td>
+                  <td>{{ $request_project->supplier->name }}</td>
+                  <td><a href="{{ route('admin.management.material_requisition.request.create.single.po', $request_project->id) }}" class="btn btn-xs btn-primary">Create Purchase Order</a></td>
+               @endif
             </tr>
             @endforeach
          </tbody>
